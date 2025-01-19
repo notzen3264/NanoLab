@@ -18,6 +18,7 @@ This simplicity allows Particle Life to simulate a range of biological processes
 
 ## Key Features
 
+- **GUI**: Action buttons and a stats panel to interact with the simulation.
 - **Particle Type Selector**: Choose different types of particles to add to the simulation.
 - **Mouse Interaction**: Add new particles to the simulation by clicking.
 - **Simulation Stats**: Displays useful stats like FPS, particle count, active types, range, and sources.
