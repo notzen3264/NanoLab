@@ -1,6 +1,18 @@
-# Particle-Life
+# Particle Life
 
-A particle simulation created in Processing to model emergent life and behaviors based on simple rules. The simulation mimics microorganisms (cells) and various forms of life, showcasing complex interactions and evolutionary processes.
+A particle simulation created in Processing to model emergent life and behaviors based on simple rules. The simulation mimics microorganisms (cells) and various forms of life.
+
+## How the Algorithm Works
+
+Particle Life uses a similar algorithmic approach to generate emergent behaviors and interactions between particles. The core principle is that simple, local interactions among particles can lead to complex, global behaviors (Emergence). This is achieved through basic rules for attraction, repulsion, and movement, all influenced by each particle's type and its surrounding environment.
+
+- **Particle Types and Interactions**: Each particle type has a colour and a specific attraction and repulsion rules with other particle types. These rules dictate how particles move, interact, and form relationships. For example, 'food' particles may attract cells, while 'toxins' repel them. These interactions influence how each cell behaves in the simulation.
+  
+- **Force Fields**: The algorithm uses force fields to determine how particles interact. These don't have to be symmetrical. These forces are based on the distance between particles and can be attractive or repulsive which causes motion This results in dynamic, evolving systems where cells constantly adjust their positions based on nearby particles.
+
+- **Emergent Complexity**: By applying simple interaction rules, Particle Life creates complex, emergent behaviors. These behaviors include self-organization (where cells group together or form patterns), directed movement (cells chasing food or avoiding toxins), and the creation of more complex structures such as multicellular organisms or tissues.
+
+The simplicity of the algorithm allows for the simulation of a variety of biological behaviors, from cell division and growth to predator-prey interactions and resource seeking. Just like in real-life ecosystems.
 
 ## Features
 - **Particle Type Selector**: Choose different types of particles for the simulation.
