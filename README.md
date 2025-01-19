@@ -43,3 +43,16 @@ The simulation includes a variety of emergent behaviors, such as:
 - **Unstable Organisms**: Irregular or large organisms that change shape, split, or shift configurations, mimicking the way some organisms (like *Slime molds*) alter their form.
 - **Cell Death**: Cells that undergo death or degradation over time, reflecting the natural life cycle of cells or organisms in nature.
 - **Chasing Prey or Food**: Certain cells will change direction using their cilia (if they have them) or slither towards them to chase free-floating particles or prey cells. This behavior simulates the hunting or foraging behavior of real microorganisms like *Amoebas* and *Paramecia*, which move towards food sources or other organisms they can engulf. This dynamic adds a layer of complexity where cells interact with their environment by actively seeking resources to survive and grow.
+
+## Image Gallery
+
+Here is a space to showcase example images of the simulation:
+
+### Example 1
+![Example 1](path-to-your-image-1.jpg)
+
+### Example 2
+![Example 2](path-to-your-image-2.jpg)
+
+### Example 3
+![Example 3](path-to-your-image-3.jpg)
