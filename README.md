@@ -4,7 +4,7 @@ A particle simulation created in Processing to model emergent life and behaviors
 
 ## How the Algorithm Works
 
-Particle Life uses a similar algorithmic approach to generate emergent behaviors and interactions between particles. The core principle is that simple, local interactions among particles can lead to complex, global behaviors (Emergence). This is achieved through basic rules for attraction, repulsion, and movement, all influenced by each particle's type and its surrounding environment.
+Particle Life uses a simple approach to generate emergent behaviors and interactions between particles. The core principle is that simple, local interactions among particles can lead to complex, global behaviors (Emergence). This is achieved through basic rules for attraction, repulsion, and movement, all influenced by each particle's type and its surrounding environment.
 
 - **Particle Types and Interactions**: Each particle type has a colour and a specific attraction and repulsion rules with other particle types. These rules dictate how particles move, interact, and form relationships. For example, 'food' particles may attract cells, while 'toxins' repel them. These interactions influence how each cell behaves in the simulation.
   
