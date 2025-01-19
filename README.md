@@ -24,6 +24,7 @@ The simulation includes a variety of emergent behaviors, such as:
 
 - **Consistent Species**: Particles will usually form 2-4 consistent species (with similar arrangements due to the global attraction and repulsion rules) with varying sizes and a population of 1-5 of each species.
 - **Basic Cells**: Cells with defined nuclei and membranes, similar to single-celled organisms like *Amoeba* or *Paramecium*.
+- **Advanced and Complex Cells**: Cells that have complex and clearly defined shapes with nuclei, membranes, organelles, flagellum, cilia, or cell walls.
 - **Vibrating Cilia**: Cells with active, vibrating cilia, mimicking organisms like *Euglena* or *Chlamydomonas* that use cilia or flagella for movement and feeding.
 - **Cell Merging & Growth**: Cells that merge and grow in size, resembling the fusion or division of cells in real life (e.g., mitosis).
 - **Toxin Ejection**: Cells ejecting particles or toxins, inspired by real-life defense mechanisms like those in *E. coli* or *Paramecium* that expel harmful substances to protect themselves.
@@ -31,7 +32,7 @@ The simulation includes a variety of emergent behaviors, such as:
 - **Digestion**: Cells with a digestion process, akin to the ingestion and breakdown of food particles in real-life protozoa or human cells (e.g., lysosomes).
 - **Multiple Membranes**: Cells featuring more than one membrane or wall, mimicking certain complex cells with multi-layered structures, like *bacterial endospores*.
 - **Molecular Chains**: Chains of molecules that may form tissue clumps or "hoops," similar to protein chains or polymers found in living organisms.
-- **Tadpoles**: Tadpole-like cells with heads containing organelles, nuclei, and tails, resembling early-stage animal embryos or multicellular organisms in the process of development.
+- **Tadpoles**: Tadpole-like cells with heads containing organelles, nuclei, and flagellum, resembling early-stage animal embryos or multicellular organisms in the process of development.
 - **Segmented Worms**: Worm-like organisms with segmented bodies, mimicking the behavior of simple multicellular animals like *Planaria* or *Nematodes*.
 - **Bow-shaped Worm/Tadpole Heads**: Organisms with a characteristic "bow" shape at the front, similar to certain marine creatures like *Ctenophores* or *Cnidarians*.
 - **Mitosis-like Reproduction**: Cells that reproduce via mitosis, splitting into two identical copies once the nucleus reaches a certain size, similar to most eukaryotic cells.
