@@ -50,7 +50,7 @@ The simulation includes a variety of emergent behaviors, such as:
 - **Mitosis-like Reproduction**: Cells that reproduce via mitosis, splitting into two identical copies once the nucleus reaches a certain size, similar to most eukaryotic cells.
 - **Multiple Nuclei**: Cells with more than one nucleus, akin to multinucleate organisms like *Slime molds* or *Coenocytic algae*.
 - **Enzyme Reactions**: Clumps that catalyze reactions between other particles, similar to enzyme-driven processes found in cells like *yeast* or *bacteria*.
-- **Geometrically Shaped Cells**: Cells with triangular, square, pentagonal, or other geometric forms, inspired by geometric formations in nature (e.g., *crystals* or certain microorganisms).
+- **Geometrically Shaped Cells**: Cells with triangular, square, pentagonal, or other geometric forms, inspired by geometric formations in nature (e.g., *crystals* or certain microorganisms like radiolarians).
 - **Amoeba-like Cells**: Cells that morph and envelop other cells, behaving similarly to amoeboid organisms that use pseudopodia for movement and engulfing food.
 - **Unstable Organisms**: Irregular or large organisms that change shape, split, or shift configurations, mimicking the way some organisms (like *Slime molds*) alter their form.
 - **Cell Death**: Cells that undergo death or degradation over time, reflecting the natural life cycle of cells or organisms in nature.
