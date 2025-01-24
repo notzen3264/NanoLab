@@ -10,7 +10,7 @@ The core idea behind Particle Life is simple: local interactions between particl
 
 - **Particle Types & Interactions**: Each particle has a unique color and specific rules for how it attracts or repels other types of particles. For example, 'food' particles might draw cells toward them, while 'toxins' will push them away. These interactions dictate how cells behave within the simulation, forming relationships and influencing their movements.
   
-- **Force Fields**: The simulation uses force fields to determine how particles interact. These fields can be attractive or repulsive, and they don't have to be symmetrical. These forces cause the particles to move in strange ways, evolving the 'ecosysten' as the cells change their positions in response to nearby particles.
+- **Force Fields**: The simulation uses force fields to determine how particles interact. These fields can be attractive or repulsive, and they don't have to be symmetrical. These forces cause the particles to move in strange ways, evolving the 'ecosystem' as the cells change their positions in response to nearby particles.
 
 - **Emergent Complexity**: The beauty of the system lies in its simplicity. The basic rules applied to particle interactions lead to more complex behaviors, such as self-organization (where cells group together or form patterns), directed movement (cells seeking 'food' or avoiding 'toxins'), and the creation of more sophisticated structures, like multicellular organisms or tissues.
 
