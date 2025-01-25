@@ -2,7 +2,6 @@ class Manager
 {
    ArrayList<Type> types = new ArrayList<Type>();
    ArrayList<Particle> particles = new ArrayList<Particle>();
-   
    void show()
    {
       for (Particle particle: particles)
@@ -19,8 +18,7 @@ class Manager
       {
          moving.update(particles);
       }
-
-      createInitialParticlesFunction();
+      generateInitialParticles();
       show();
    }
    
@@ -29,9 +27,9 @@ class Manager
       particles.add(new Particle(type, new PVector(x, y), types));
    }
    
-   void addType(color c, float[] attraction, float[] middle, float[] repelDist)
+   void addType(color c, float typeRadius, float[] attraction, float[] middle, float[] repelDist)
    {
-      types.add(new Type(c, attraction, middle, repelDist, types));
+      types.add(new Type(c, typeRadius, attraction, middle, repelDist, types));
    }
    
    void randomParticles(int num, float rad)
@@ -46,15 +44,18 @@ class Manager
    
    void randomTypes()
    {
-      int len = (int) random(2, 16);
+      int len = (int) random(3, 15);
       for (int i = 0; i < len; i++)
       {
-         float[] a = makeArray(-3, 3, len);
-         float[] m = makeArray(15, 80, len);
-         float[] r = makeArray(2, 15, len);
+         float[] a = makeArray(-3 * rMax, 3 * rMax, len);
+         float[] m = makeArray(15 * rMax, 80 * rMax, len);
+         float[] r = makeArray(2 * rMax, 15 * rMax, len);
+         
          color c = color(random(50, 255), random(50, 255), random(50, 255));
          
-         man.addType(c, a, m, r);
+         float t = random(2, 4);
+         
+         man.addType(c, t, a, m, r);
       }
    }
    
@@ -78,15 +79,17 @@ class Manager
       }
    }
    
-   void createInitialParticlesFunction() {
-      if (currentParticles < initialParticles) {
-         if (createInitialParticles) {
-            createInitialParticlesChance = (int) random(0, 2);
-            man.randomParticles(createInitialParticlesChance, random(-0, range));
-            currentParticles += createInitialParticlesChance;
+   void generateInitialParticles() {
+      if (gui.running) {
+         if (currentParticles < initialParticles) {
+            if (createInitialParticles) {
+               createInitialParticlesChance = (int) random(0, 2);
+               man.randomParticles(createInitialParticlesChance, random(0, range));
+               currentParticles += createInitialParticlesChance;
+            }
+         } else {
+            createInitialParticles = false;
          }
-      } else {
-         createInitialParticles = false;
       }
    }
 }

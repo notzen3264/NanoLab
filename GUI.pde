@@ -1,10 +1,15 @@
 class GUI {
    Manager man;
+   Button mouseButton;
+   Button restartButton;
+   Button newTypesButton;
+   Button pauseButton;
+   Button clearButton;
+   
    int selected;
    int frameIndex;
-   float radius;
-   bool running;
-   bool justPressed;
+   boolean running;
+   boolean justPressed;
    int fps;
    int lastTime;
    
@@ -12,11 +17,27 @@ class GUI {
       this.selected = 0;
       frameIndex = 0;
       this.man = man;
-      GUIRadius = 17.5;
+      guiRadius = 17.5;
+      guiDiameter = guiRadius * 2;
+      space = guiDiameter + 10;
+      guiColour = 100;
+      guiButtonWidth = 100;
+      guiButtonHeight = 45;
       running = true;
       justPressed = false;
       fps = 0;
       lastTime = millis();
+      time = 0;
+      
+      mouseButton = new Button(width - (guiButtonWidth + space - guiRadius), 1 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Push Mouse", false);
+      
+      restartButton = new Button(width - (guiButtonWidth + space - guiRadius), 3 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Restart", false);
+      
+      newTypesButton = new Button(width - (guiButtonWidth + space - guiRadius), 5 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "New Types", false);
+      
+      pauseButton = new Button(width - (guiButtonWidth + space - guiRadius), 7 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Pause/Play", false);
+      
+      clearButton = new Button(width - (guiButtonWidth + space - guiRadius), 9 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Clear", false);
    }
    
    void update() {
@@ -30,21 +51,20 @@ class GUI {
          justPressed = false;
       }
       
-      // Calculate FPS
-      int currentTime = millis();
-      if (currentTime - lastTime > 1000) {
-         fps = frameCount;
-         frameCount = 0;
-         lastTime = currentTime;
+      if (running) {
+         int currentTime = millis();
+         if (currentTime - lastTime > 1000) {
+            fps = frameCount;
+            frameCount = 0;
+            lastTime = currentTime;
+            time += 1;
+         }
       }
-
+      
       show();
    }
    
    void show() {
-      float GUIDiameter = GUIRadius * 2;
-      float space = GUIDiameter + 10;
-      
       for (int i = 0; i < man.types.size(); i++) {
          fill(man.types.get(i).c);
          noStroke();
@@ -54,87 +74,119 @@ class GUI {
             strokeWeight(3);
          }
          
-         ellipse(space + i * space, space, GUIDiameter, GUIDiameter);
+         ellipse(space + i * space, space, guiDiameter, guiDiameter);
          noStroke();
       }
-      fill(255, 0, 0);
-      ellipse(width - space, space, GUIDiameter, GUIDiameter);
       
-      fill(0, 255, 0);
-      ellipse(width - 2 * space, space, GUIDiameter, GUIDiameter);
-      
-      fill(255, 255, 0);
-      ellipse(width - 4 * space, space, GUIDiameter, GUIDiameter);
-      
-      fill(0, 255, 255);
-      ellipse(width - 5 * space, space, GUIDiameter, GUIDiameter);
-      
-      noFill();
-      stroke(255);
-      strokeWeight(3);
-      ellipse(width - 3 * space, space, GUIDiameter, GUIDiameter);
+      mouseButton.display();
+      restartButton.display();
+      newTypesButton.display();
+      pauseButton.display();
+      clearButton.display();
       
       textSize(20);
       fill(255);
-      text("FPS: " + fps, space - GUIRadius, 100);
-      text("Particles: " + currentParticles, space - GUIRadius, 130);
-      text("Types: " + man.types.size(), space - GUIRadius, 160);
-      text("Range: " + range, space - GUIRadius, 190);
-      text("Source: " + useSource, space - GUIRadius, 220);
-      text("Particle Life v1.8", space - GUIRadius, height - 30);
+      textAlign(LEFT);
+      text("Time Elapsed: " + time + "s", space - guiRadius, 100);
+      text("FPS: " + fps, space - guiRadius, 130);
+      text("Particles: " + currentParticles, space - guiRadius, 160);
+      text("Types: " + man.types.size(), space - guiRadius, 190);
+      text("rMax: " + rMax, space - guiRadius, 220);
+      text("Max Particle Speed: " + maxSpeed, space - guiRadius, 250);   
+      text("Particle Life v1.9", space - guiRadius, height - 30);
+      text("By @CyMasterDev (Edward N)", width - (space - guiRadius) - 275, height - 30);   
    }
    
    void mouseDown() {
-      float GUIDiameter = GUIRadius * 2;
-      float space = GUIDiameter + 10;
-      
       PVector pos = new PVector(mouseX, mouseY);
       for (int i = 0; i < man.types.size(); i++) {
-         if (pos.dist(new PVector(space + i * space, space)) <= GUIDiameter) {
+         if (pos.dist(new PVector(space + i * space, space)) <= guiDiameter) {
             selected = i;
             mouse.selected = false;
+            mouseButton.isSelected = false;
             return;
          }
       }
       
-      if (pos.dist(new PVector(width-space, space)) <= GUIDiameter) {
+      if (clearButton.isMouseOver()) {
+         time = 0;
          man.particles.clear();
-         currentParticles = 0;   
+         currentParticles = 0;
          createInitialParticles = false;
          return;
       }
       
-      if (pos.dist(new PVector(width - 2 * space, space)) <= GUIDiameter && !justPressed) {
+      if (pauseButton.isMouseOver() && !justPressed) {
          justPressed = true;
          running = !running;
          return;
       }
       
-      if (pos.dist(new PVector(width - 3 * space, space)) <= GUIDiameter) {
-         mouse.selected = true;
+      if (mouseButton.isMouseOver()) {
+         selected = null;
+         mouse.selected = !mouse.selected;
+         mouseButton.isSelected = !mouseButton.isSelected;
          return;
       }
       
-      if (pos.dist(new PVector(width - 4 * space, space)) <= GUIDiameter) {
+      if (newTypesButton.isMouseOver()) {
+         time = 0;
          man.particles.clear();
+         currentParticles = 0;
          man.types.clear();
          man.randomTypes();
          man.randomRange();
-         currentParticles = 0;
          createInitialParticles = true;
          return;
       }
       
-      if (pos.dist(new PVector(width - 5 * space, space)) <= GUIDiameter) {
+      if (restartButton.isMouseOver()) {
+         time = 0;
          man.particles.clear();
          currentParticles = 0;
          createInitialParticles = true;
          man.randomRange();
       }
       
-      if (!mouse.selected) {
+      if (!mouse.selected && selected != null) {
          man.addParticle(selected, mouseX, mouseY);
          currentParticles += 1;
       }
    }
 }
+
+class Button {
+   float x, y, w, h;
+   String label;
+   boolean isSelected;
+   
+   Button(float x, float y, float w, float h, String label, boolean isSelected) {
+      this.x = x;
+      this.y = y;
+      this.w = w;
+      this.h = h;
+      this.label = label;
+      this.isSelected = false;
+   }
+   
+   void display() {
+      fill(guiColour);
+      if (this.isSelected) {
+         stroke(255);
+         strokeWeight(3);
+      } else {
+         noStroke();
+      }
+      rect(x, y, w, h);
+      fill(255);
+      textSize(15);
+      textAlign(CENTER, CENTER);
+      text(label, x + w/2, y + h/2);
+   }
+   
+   boolean isMouseOver() {
+      return (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h);
+   }
+}
+
+

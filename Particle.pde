@@ -1,8 +1,6 @@
 class Particle {
    PVector pos;
    Type type;
-   //float radius = random(3, 6);
-   float particleRadius = 4;
    
    Particle(int index, PVector pos, ArrayList<Type> list) {
       this.pos = pos;
@@ -12,7 +10,7 @@ class Particle {
    void show() {
       fill(type.c);
       noStroke();
-      ellipse(pos.x, pos.y, particleRadius, particleRadius);
+      ellipse(pos.x, pos.y, type.typeRadius, type.typeRadius);
    }
    
    void update(ArrayList<Particle> particles) {
@@ -26,8 +24,7 @@ class Particle {
                increase.add(this.applyForce(forcing));
             }
          }
-         
-         increase.limit(random(3, 6));
+         increase.limit(maxSpeed);
       }
       
       this.pos.add(increase);
