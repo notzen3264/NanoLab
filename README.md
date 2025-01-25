@@ -18,12 +18,11 @@ This simplicity allows Particle Life to simulate a range of biological processes
 
 ## Key Features
 
-- **GUI**: Action buttons and a stats panel to interact with the simulation.
+- **GUI**: Action/tool buttons and a stats panel to interact with the simulation.
 - **Particle Type Selector**: Choose different types of particles to add to the simulation.
 - **Mouse Interaction**: Add new particles to the simulation by clicking.
-- **Simulation Stats**: Displays useful stats like FPS, particle count, active types, range, and sources.
-- **Action Buttons**: Quick access to common simulation controls.
-- **Mouse Push Tool**: Push particles around using your mouse to influence the environment.
+- **Simulation Stats**: Displays useful stats like time elapsed, FPS, particle count, active types, max particle speed, and rMax.
+- **Mouse Push Tool**: Push particles around using your mouse to change the environment.
 - **Simulation Controls**: Easily restart, pause, or clear particles with simple buttons.
 - **Dynamic Behavior**: Create new particle types and interaction rules during the simulation.
 - **Pause/Restart**: Pause or restart the simulation at any time.
