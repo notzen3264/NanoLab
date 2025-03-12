@@ -5,6 +5,7 @@ class GUI {
    Button newTypesButton;
    Button pauseButton;
    Button clearButton;
+   Button shadersButton;
    
    int selected;
    int frameIndex;
@@ -21,7 +22,7 @@ class GUI {
       guiDiameter = guiRadius * 2;
       space = guiDiameter + 10;
       guiColour = 100;
-      guiButtonWidth = 100;
+      guiButtonWidth = 185;
       guiButtonHeight = 45;
       running = true;
       justPressed = false;
@@ -29,15 +30,17 @@ class GUI {
       lastTime = millis();
       time = 0;
       
-      mouseButton = new Button(width - (guiButtonWidth + space - guiRadius), 1 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Push Mouse", false);
+      mouseButton = new Button(width - (guiButtonWidth + space - guiRadius), 1 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Mouse Push 🖱️", false);
       
-      restartButton = new Button(width - (guiButtonWidth + space - guiRadius), 3 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Restart", false);
+      restartButton = new Button(width - (guiButtonWidth + space - guiRadius), 3 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Restart Ecosystem 🔄", false);
       
-      newTypesButton = new Button(width - (guiButtonWidth + space - guiRadius), 5 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "New Types", false);
+      newTypesButton = new Button(width - (guiButtonWidth + space - guiRadius), 5 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "New Types 🦠", false);
       
-      pauseButton = new Button(width - (guiButtonWidth + space - guiRadius), 7 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Pause/Play", false);
+      pauseButton = new Button(width - (guiButtonWidth + space - guiRadius), 7 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Pause ⏸️", false);
       
-      clearButton = new Button(width - (guiButtonWidth + space - guiRadius), 9 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Clear", false);
+      clearButton = new Button(width - (guiButtonWidth + space - guiRadius), 9 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Clear Particles 🆑", false);
+      
+      shadersButton = new Button(width - (guiButtonWidth + space - guiRadius), 11 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Toggle Shaders 🎨🖌️", false);
    }
    
    void update() {
@@ -58,9 +61,12 @@ class GUI {
             frameCount = 0;
             lastTime = currentTime;
             time += 1;
+            
+            if (debug) {
+               println("estimated " + (currentParticles * currentParticles) * fps + " calculations per second");
+            }
          }
       }
-      
       show();
    }
    
@@ -69,7 +75,7 @@ class GUI {
          fill(man.types.get(i).c);
          noStroke();
          
-         if (selected == i) {
+         if (selected == i && this.isSelected) {
             stroke(255);
             strokeWeight(3);
          }
@@ -83,24 +89,26 @@ class GUI {
       newTypesButton.display();
       pauseButton.display();
       clearButton.display();
+      shadersButton.display();
       
-      textSize(20);
+      textSize(17.5);
       fill(255);
       textAlign(LEFT);
       text("Time Elapsed: " + time + "s", space - guiRadius, 100);
       text("FPS: " + fps, space - guiRadius, 130);
       text("Particles: " + currentParticles, space - guiRadius, 160);
       text("Types: " + man.types.size(), space - guiRadius, 190);
-      text("rMax: " + rMax, space - guiRadius, 220);
-      text("Max Particle Speed: " + maxSpeed, space - guiRadius, 250);   
-      text("Particle Life v1.9", space - guiRadius, height - 30);
-      text("By @CyMasterDev (Edward N)", width - (space - guiRadius) - 275, height - 30);   
+      text("Max Particle Speed: " + maxSpeed, space - guiRadius, 220);   
+      text("Particle Life v1.9 🧫🦠🧬🧪🧑‍🔬", space - guiRadius, height - 30);
+      text("By @CyMasterDev (Github)", width - (space - guiRadius) - 250, height - 30);
    }
    
    void mouseDown() {
       PVector pos = new PVector(mouseX, mouseY);
       for (int i = 0; i < man.types.size(); i++) {
-         if (pos.dist(new PVector(space + i * space, space)) <= guiDiameter) {
+         if (pos.dist(new PVector(space + i * space, space)) <= guiDiameter && !justPressed) {
+            justPressed = true;
+            this.isSelected = !this.isSelected;
             selected = i;
             mouse.selected = false;
             mouseButton.isSelected = false;
@@ -108,7 +116,8 @@ class GUI {
          }
       }
       
-      if (clearButton.isMouseOver()) {
+      if (clearButton.isMouseOver() && !justPressed) {
+         justPressed = true;
          time = 0;
          man.particles.clear();
          currentParticles = 0;
@@ -119,17 +128,24 @@ class GUI {
       if (pauseButton.isMouseOver() && !justPressed) {
          justPressed = true;
          running = !running;
+         if(!running) {
+            pauseButton.label = "Play ▶️"
+         } else {
+            pauseButton.label = "Pause ⏸️";
+         }
          return;
       }
       
-      if (mouseButton.isMouseOver()) {
+      if (mouseButton.isMouseOver() && !justPressed) {
+         justPressed = true;
          selected = null;
          mouse.selected = !mouse.selected;
          mouseButton.isSelected = !mouseButton.isSelected;
          return;
       }
       
-      if (newTypesButton.isMouseOver()) {
+      if (newTypesButton.isMouseOver() && !justPressed) {
+         justPressed = true;
          time = 0;
          man.particles.clear();
          currentParticles = 0;
@@ -140,7 +156,8 @@ class GUI {
          return;
       }
       
-      if (restartButton.isMouseOver()) {
+      if (restartButton.isMouseOver() && !justPressed) {
+         justPressed = true;
          time = 0;
          man.particles.clear();
          currentParticles = 0;
@@ -148,7 +165,13 @@ class GUI {
          man.randomRange();
       }
       
-      if (!mouse.selected && selected != null) {
+      if (shadersButton.isMouseOver() && !justPressed) {
+         justPressed = true;
+         useShaders = !useShaders;
+         shadersButton.isSelected = !shadersButton.isSelected;
+      }  
+      
+      if (!mouse.selected && selected != null && !justPressed) {
          man.addParticle(selected, mouseX, mouseY);
          currentParticles += 1;
       }

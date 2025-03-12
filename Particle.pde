@@ -8,8 +8,12 @@ class Particle {
    }
    
    void show() {
-      fill(type.c);
       noStroke();
+      if(useShaders) {
+         fill(type.c, 50)
+         ellipse(pos.x, pos.y, type.typeRadius*3, type.typeRadius*3);
+      }
+      fill(type.c, 255);
       ellipse(pos.x, pos.y, type.typeRadius, type.typeRadius);
    }
    
@@ -38,7 +42,7 @@ class Particle {
       float distance = PVector.dist(this.pos, wrappedPos);
       
       float ratio;
-      if (distance == 0) {
+      if (distance === 0) {
          ratio = 0;
       } else {
          ratio = (this.forceEq(other) / distance);
