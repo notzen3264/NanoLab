@@ -1,11 +1,13 @@
 class GUI {
    Manager man;
+   Button menuButton;
    Button mouseButton;
    Button restartButton;
    Button newTypesButton;
    Button pauseButton;
    Button clearButton;
    Button shadersButton;
+   Button collisionsButton;
    
    int selected;
    int frameIndex;
@@ -22,7 +24,7 @@ class GUI {
       guiDiameter = guiRadius * 2;
       space = guiDiameter + 10;
       guiColour = 100;
-      guiButtonWidth = 185;
+      guiButtonWidth = 200;
       guiButtonHeight = 45;
       running = true;
       justPressed = false;
@@ -30,17 +32,21 @@ class GUI {
       lastTime = millis();
       time = 0;
       
-      mouseButton = new Button(width - (guiButtonWidth + space - guiRadius), 1 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Mouse Push 🖱️", false);
+      menuButton = new Button(width - (100 + space - guiRadius), 1 * (space - guiRadius), 100, guiButtonHeight, "Menu 🛠️", false, true);
       
-      restartButton = new Button(width - (guiButtonWidth + space - guiRadius), 3 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Restart Ecosystem 🔄", false);
+      mouseButton = new Button(width - (guiButtonWidth + space - guiRadius), 3 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Mouse", false, false);
       
-      newTypesButton = new Button(width - (guiButtonWidth + space - guiRadius), 5 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "New Types 🦠", false);
+      restartButton = new Button(width - (guiButtonWidth + space - guiRadius), 5 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Restart Microenvironment", false, false);
       
-      pauseButton = new Button(width - (guiButtonWidth + space - guiRadius), 7 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Pause ⏸️", false);
+      newTypesButton = new Button(width - (guiButtonWidth + space - guiRadius), 7 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "New Types", false, false);
       
-      clearButton = new Button(width - (guiButtonWidth + space - guiRadius), 9 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Clear Particles 🆑", false);
+      pauseButton = new Button(width - (guiButtonWidth + space - guiRadius), 9 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Pause", false, false);
       
-      shadersButton = new Button(width - (guiButtonWidth + space - guiRadius), 11 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Toggle Shaders 🎨🖌️", false);
+      clearButton = new Button(width - (guiButtonWidth + space - guiRadius), 11 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Clear Microenvironment", false, false);
+      
+      shadersButton = new Button(width - (guiButtonWidth + space - guiRadius), 13 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Toggle Shaders", false, false);
+      
+      collisionsButton = new Button(width - (guiButtonWidth + space - guiRadius), 15 * (space - guiRadius), guiButtonWidth, guiButtonHeight, "Collisions (experimental)", false, false);
    }
    
    void update() {
@@ -61,10 +67,6 @@ class GUI {
             frameCount = 0;
             lastTime = currentTime;
             time += 1;
-            
-            if (debug) {
-               println("estimated " + (currentParticles * currentParticles) * fps + " calculations per second");
-            }
          }
       }
       show();
@@ -84,12 +86,14 @@ class GUI {
          noStroke();
       }
       
+      menuButton.display();
       mouseButton.display();
       restartButton.display();
       newTypesButton.display();
       pauseButton.display();
       clearButton.display();
       shadersButton.display();
+      collisionsButton.display();         
       
       textSize(17.5);
       fill(255);
@@ -98,9 +102,8 @@ class GUI {
       text("FPS: " + fps, space - guiRadius, 130);
       text("Particles: " + currentParticles, space - guiRadius, 160);
       text("Types: " + man.types.size(), space - guiRadius, 190);
-      text("Max Particle Speed: " + maxSpeed, space - guiRadius, 220);   
-      text("Particle Life v1.9 🧫🦠🧬🧪🧑‍🔬", space - guiRadius, height - 30);
-      text("By @CyMasterDev (Github)", width - (space - guiRadius) - 250, height - 30);
+      text("NanoLab v1.9.4", space - guiRadius, height - 30);
+      text("By @notzen3264 (Github)", width - (space - guiRadius) - 200, height - 30);
    }
    
    void mouseDown() {
@@ -121,7 +124,7 @@ class GUI {
          time = 0;
          man.particles.clear();
          currentParticles = 0;
-         createInitialParticles = false;
+         useInitialParticles = false;
          return;
       }
       
@@ -129,9 +132,9 @@ class GUI {
          justPressed = true;
          running = !running;
          if(!running) {
-            pauseButton.label = "Play ▶️"
+            pauseButton.label = "Play"
          } else {
-            pauseButton.label = "Pause ⏸️";
+            pauseButton.label = "Pause";
          }
          return;
       }
@@ -152,7 +155,7 @@ class GUI {
          man.types.clear();
          man.randomTypes();
          man.randomRange();
-         createInitialParticles = true;
+         useInitialParticles = true;
          return;
       }
       
@@ -161,7 +164,7 @@ class GUI {
          time = 0;
          man.particles.clear();
          currentParticles = 0;
-         createInitialParticles = true;
+         useInitialParticles = true;
          man.randomRange();
       }
       
@@ -169,7 +172,25 @@ class GUI {
          justPressed = true;
          useShaders = !useShaders;
          shadersButton.isSelected = !shadersButton.isSelected;
-      }  
+      }
+      
+      if (collisionsButton.isMouseOver() && !justPressed) {
+         justPressed = true;
+         useHandleCollisions = !useHandleCollisions;
+         collisionsButton.isSelected = !collisionsButton.isSelected;
+      }
+      
+      if (menuButton.isMouseOver() && !justPressed) {
+         justPressed = true;
+         mouseButton.isDisplay = !mouseButton.isDisplay;
+         restartButton.isDisplay = !restartButton.isDisplay;
+         newTypesButton.isDisplay = !newTypesButton.isDisplay;
+         pauseButton.isDisplay = !pauseButton.isDisplay;
+         clearButton.isDisplay = !clearButton.isDisplay;
+         shadersButton.isDisplay = !shadersButton.isDisplay;
+         collisionsButton.isDisplay = !collisionsButton.isDisplay;
+         menuButton.isSelected = !menuButton.isSelected;
+      }
       
       if (!mouse.selected && selected != null && !justPressed) {
          man.addParticle(selected, mouseX, mouseY);
@@ -183,32 +204,37 @@ class Button {
    String label;
    boolean isSelected;
    
-   Button(float x, float y, float w, float h, String label, boolean isSelected) {
+   Button(float x, float y, float w, float h, String label, boolean isSelected, boolean isDisplay) {
       this.x = x;
       this.y = y;
       this.w = w;
       this.h = h;
       this.label = label;
-      this.isSelected = false;
+      this.isSelected = isSelected;
+      this.isDisplay = isDisplay;
    }
    
    void display() {
-      fill(guiColour);
-      if (this.isSelected) {
-         stroke(255);
-         strokeWeight(3);
-      } else {
-         noStroke();
+      if (this.isDisplay) {
+         fill(guiColour);
+         if (this.isSelected) {
+            stroke(255);
+            strokeWeight(3);
+         } else {
+            noStroke();
+         }
+         rect(x, y, w, h);
+         fill(255);
+         textSize(15);
+         textAlign(CENTER, CENTER);
+         text(label, x + w/2, y + h/2);
       }
-      rect(x, y, w, h);
-      fill(255);
-      textSize(15);
-      textAlign(CENTER, CENTER);
-      text(label, x + w/2, y + h/2);
    }
    
    boolean isMouseOver() {
-      return (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h);
+      if(this.isDisplay) {
+         return (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h);
+      }
    }
 }
 

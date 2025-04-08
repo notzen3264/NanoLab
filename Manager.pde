@@ -1,8 +1,7 @@
 class Manager {
    ArrayList<Type> types = new ArrayList<Type>();
    ArrayList<Particle> particles = new ArrayList<Particle>();
-   float collisionSoftness = 0.3;
-   float maxSpeed = 6;
+   float collisionSoftness = 1;
    
    void show() {
       for (Particle particle: particles) {
@@ -13,12 +12,10 @@ class Manager {
    void update() {
       background(0);
       
-      handleCollisions();
-      
       for (Particle p : particles) {
          p.wrapParticles();
          p.update(particles);
-         /*Experimental collision handling feature*/
+         /*Experimental extremely unperformant collision handling module*/
          if (useHandleCollisions) {
             handleCollisions();
          }
@@ -41,14 +38,16 @@ class Manager {
             
             if (distance < minDist && distance > 0) {
                delta.normalize();
-               delta.rotate(random(-0, 0)); // Add organic variation
                
-               float overlap = minDist - distance;
-               float displace = overlap * random(1, 3) * collisionSoftness;
+               float overlap = (minDist - distance);
                float totalMass = a.type.typeRadius + b.type.typeRadius;
+               float displace = overlap  ;
+               float angle = 0;
                
-               a.pos.sub(PVector.mult(delta, displace * (b.type.typeRadius/totalMass)));
-               b.pos.add(PVector.mult(delta, displace * (a.type.typeRadius/totalMass)));
+               delta.rotate((angle / 1000) / (a.type.typeRadius / b.type.typeRadius));
+               
+               a.pos.sub(PVector.mult(delta, displace * (a.type.typeRadius / totalMass)));
+               b.pos.add(PVector.mult(delta, displace * (b.type.typeRadius / totalMass)));
             }
          }
       }
@@ -68,7 +67,8 @@ class Manager {
    {
       for (int i = 0; i < num; i++)
       {
-         float x = random(-1, 1);
+         float u = 1;
+         float x = random(-u, u);
          float y = random(-sqrt(1 - x*x), sqrt(1 - x*x));
          addParticle((int) random(0, types.size()), width/2 + x*rad, height/2 + y*rad);
       }
@@ -76,16 +76,17 @@ class Manager {
    
    void randomTypes()
    {
-      int len = (int) random(3, 16);
+      int len = (int) random(3, 12);
       for (int i = 0; i < len; i++)
       {
+         
          float[] a = makeArray(-3, 3, len);
          float[] m = makeArray(15, 80, len);
-         float[] r = makeArray(2, (int) random(15, 32), len);
+         float[] r = makeArray(2, (int) random(25, 32), len);
+
+         float t = random(2, 4);
          
          color c = color(random(100, 255), random(100, 255), random(100, 255));
-         
-         float t = random(1, 5);
          
          man.addType(c, t, a, m, r);
       }
@@ -109,19 +110,19 @@ class Manager {
    
    void generateInitialParticles() {
       if (gui.running) {
-         if (currentParticles < initialParticles) {
-            if (createInitialParticles) {
-               if (instantlyCreateInitialParticles) {
-                  man.randomParticles(initialParticles, initialParticles * 0.75);
-                  currentParticles += initialParticles;
+         if (currentParticles < initialParticlesNum) {
+            if (useInitialParticles) {
+               if (useInstant) {
+                  man.randomParticles(initialParticlesNum, screenWidth);
+                  currentParticles += initialParticlesNum;
                } else {
                   step = (int) random(0, 2);
-                  man.randomParticles(step, initialParticles * 0.75);
+                  man.randomParticles(step, screenWidth);
                   currentParticles += step;
                }
             }
          } else {
-            createInitialParticles = false;
+            useInitialParticles = false;
          }
       }
    }

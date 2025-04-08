@@ -10,8 +10,8 @@ class Particle {
    void show() {
       noStroke();
       if(useShaders) {
-         fill(type.c, 50)
-         ellipse(pos.x, pos.y, type.typeRadius*3, type.typeRadius*3);
+         fill(type.c, 100)
+         ellipse(pos.x, pos.y, type.typeRadius*2, type.typeRadius*2);
       }
       fill(type.c, 255);
       ellipse(pos.x, pos.y, type.typeRadius, type.typeRadius);
@@ -28,7 +28,7 @@ class Particle {
                increase.add(this.applyForce(forcing));
             }
          }
-         increase.limit(maxSpeed);
+         increase.mult(random(0.7, 1));
       }
       
       this.pos.add(increase);
@@ -36,7 +36,6 @@ class Particle {
    }
    
    PVector applyForce(Particle other) {
-      // Calculate the shortest distance considering wrapping
       PVector wrappedPos = getShortestDistance(other.pos);
       
       float distance = PVector.dist(this.pos, wrappedPos);
