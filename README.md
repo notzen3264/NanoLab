@@ -1,12 +1,12 @@
-# Particle Life
+# NanoLab
 
-Particle Life is a simulation created with Processing, inspired by Jeffrey Ventrella's [Clusters](https://ventrella.com/Clusters/), designed to model the behaviors and interactions of microscopic organisms (cells) based on simple rules.
+NanoLab is a simulation created with Processing, inspired by Jeffrey Ventrella's [Clusters](https://ventrella.com/Clusters/), designed to model the behaviors and interactions of microscopic organisms (cells) based on simple rules.
 
 [Intro to Clusters](https://ventrella.com/Clusters/intro.html)
 
 ## How It Works
 
-The core idea behind Particle Life is simple: local interactions between particles lead to complex, global behaviors, a concept known as **Emergence**. This is achieved through a set of basic rules governing attraction, repulsion, and movement, all of which are affected by the type of particle and its neighbouring environment.
+The core idea behind NanoLab is simple: local interactions between particles lead to complex, global behaviors, a concept known as **Emergence**. This is achieved through a set of basic rules governing attraction, repulsion, and movement, all of which are affected by the type of particle and its neighbouring environment.
 
 - **Particle Types & Interactions**: Each particle has a unique color and specific rules for how it attracts or repels other types of particles. For example, 'food' particles might draw cells toward them, while 'toxins' will push them away. These interactions dictate how cells behave within the simulation, forming relationships and influencing their movements.
   
@@ -14,7 +14,7 @@ The core idea behind Particle Life is simple: local interactions between particl
 
 - **Emergent Complexity**: The beauty of the system lies in its simplicity. The basic rules applied to particle interactions lead to more complex behaviors, such as self-organization (where cells group together or form patterns), directed movement (cells seeking 'food' or avoiding 'toxins'), and the creation of more sophisticated structures, like multicellular organisms or tissues.
 
-This simplicity allows Particle Life to simulate a range of biological processes, from cell division and growth to predator-prey dynamics and resource-seeking behaviors, much like in real ecosystems.
+This simplicity allows NanoLab to simulate a range of biological processes, from cell division and growth to predator-prey dynamics and resource-seeking behaviors, much like in real ecosystems.
 
 ## Key Features
 
